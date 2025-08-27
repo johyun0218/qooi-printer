@@ -1,0 +1,39 @@
+<html>
+    <head>
+        <title>Print Test</title>
+        <!-- JSPrintManager Javascript Source -->
+        <script type="text/javascript" src="JSPrintManager.js"></script>
+        <script>
+            function printPage() {
+                JSPM.JSPrintManager.license_url = "https://jsprintmanager.azurewebsites.net/licenses/jsprintmanager";
+                JSPM.JSPrintManager.auto_reconnect = true;
+JSPM.JSPrintManager.start();
+
+JSPM.JSPrintManager.WS.onOpen = () => {
+  let cpj = new JSPM.ClientPrintJob();
+  cpj.clientPrinter = new JSPM.DefaultPrinter();
+
+  const pplaCode = `^Q100,3
+^W100
+^H10
+^P1
+^S4
+^AT
+^C1
+^R0
+^L
+A50,50,0,3,1,1,N,"Node.js Printer"
+E`;
+
+  // NestJS API에서 PPLA 명령어 가져오기
+      cpj.printerCommands = pplaCode;
+      cpj.sendToClient();
+};
+            }
+        </script>
+    </head>
+    <body onload="printPage()">
+        <h1>Print Test Page</h1>
+        <p>This page is intended to be printed automatically when loaded.</p>
+    </body>
+</html>
