@@ -1,3 +1,5 @@
 logs
-__old
 logger.dat
+venv
+__old
+__pycache__

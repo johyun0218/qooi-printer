@@ -1,5 +1,4 @@
 from flask import Flask, request, jsonify
-import socket
 import os
 import subprocess
 
