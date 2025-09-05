@@ -1,12 +1,16 @@
 from flask import Flask, request, jsonify
+from flask_cors import CORS
 import os
 import subprocess
+from dotenv import load_dotenv
+
+load_dotenv()
 
 app = Flask(__name__)
+app.config['PRINTER_NAME'] = os.getenv("PRINTER_NAME")
+CORS(app)  # 모든 도메인 허용
 
-LABEL_TEMPLATE = "labels/asset-template.prn"
-PRINTER_NAME = "Argox CP-2140EX-USB"  # 윈도우 제어판에 표시된 프린터 이름
-PRN_OUTPUT = "labels/asset-output.prn"
+# PRINTER_NAME = "Argox CP-2140EX-USB"  # 윈도우 제어판에 표시된 프린터 이름
 
 
 def print_label(name: str, date: str, qr: str):
@@ -76,7 +80,7 @@ def print_jar(device_name: str, mng_data: str, product_data: str, purchase_data:
 def print_api():
     """라벨 출력 API"""
     data = request.json
-    device_name = data.get("device_name", "")
+    device_name = app.config['PRINTER_NAME']
     mng_data = data.get("mng_data", "")
     product_data = data.get("product_data", "")
     purchase_data = data.get("purchase_data", "")
