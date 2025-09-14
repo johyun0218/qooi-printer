@@ -3,3 +3,4 @@ logger.dat
 venv
 __old
 __pycache__
+.env
